@@ -42,6 +42,44 @@
           name: "Pudge",
         },
       ];
+
+      const createMatches = (players, matches = []) => {
+        const winners = [];
+
+        if (players.length <= 2) return matches;
+
+        for (let i = 0; i < players.length; i + 2) {
+          const playerOneScore = Math.floor(Math.random() * 5) + 1;
+          const playerTwoScore = 5 - playerOneScore;
+
+          winners.push(
+            playerOneScore > playerTwoScore
+              ? { ...players[i] }
+              : { ...players[i + 1] }
+          );
+
+          matches.push({
+            _id: matches.length + 1,
+            players: [
+              {
+                _id: players[i]._id,
+                name: players[i]._name,
+                score: playerOneScore,
+              },
+              {
+                _id: players[i + 1]._id,
+                name: players[i + 2]._name,
+                score: playerTwoScore,
+              },
+            ],
+          });
+        }
+
+        return createMatches(winners, [...matches]);
+      };
+
+      // console.log(createMatches(players));
+
       customElements.define(
         "player-card",
         class extends HTMLElement {
@@ -53,7 +91,7 @@
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
-                }  
+                }
 
                 .card > div {
                   padding: 0.5rem;
@@ -61,7 +99,7 @@
 
                 p {
                   margin: 0;
-                  
+
                 }
 
                 .card-score {
@@ -122,10 +160,23 @@
       customElements.define(
         "bracket-container",
         class BracketContainer extends HTMLElement {
-          connectedCallback() {}
+          connectedCallback() {
+            this.attachShadow({ mode: "open" }).append(
+              bracketTmplt.content.cloneNode(true)
+            );
+          }
         }
       );
     </script>
+
+    <template id="bracketTmplt">
+      <style>
+        :host {
+          margin-bottom: 75px;
+        }
+      </style>
+      <slot></slot>
+    </template>
 
     <bracket-container>
       <match-card
