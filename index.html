@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      bracket-container {
+        margin-bottom: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      customElements.define(
+        "player-card",
+        class extends HTMLElement {
+          connectedCallback() {
+            this.attachShadow({ mode: "open" });
+            this.shadowRoot.innerHTML = `
+              <style>
+                .card {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 0.5rem;
+                }  
+
+                p {
+                  margin: 0;
+                }
+              </style>
+              <div class="card">
+                <div class="card-name">
+                  <p>${this.getAttribute("name")}</p>
+                </div>
+                <div class="card-score">
+                  <p>${this.getAttribute("score")}</p>
+                </div>
+              </div>
+            `;
+          }
+        }
+      );
+
+      customElements.define(
+        "match-card",
+        class extends HTMLElement {
+          connectedCallback() {
+            this.attachShadow({ mode: "open" });
+            this.shadowRoot.innerHTML = `
+              <style>
+                .card {
+                  display: flex;
+                  flex-direction: column;
+                  background: #181818;
+                  color: #fff;
+                  width: 100px;
+                  margin-bottom: 20px;
+                }
+              </style>
+
+              <div class="card">
+                <player-card name="${this.getAttribute(
+                  "playerOneName"
+                )}" score="${this.getAttribute(
+              "playerOneScore"
+            )}"></player-card>
+                <player-card name="${this.getAttribute(
+                  "playerTwoName"
+                )}" score="${this.getAttribute(
+              "playerTwoScore"
+            )}"></player-card>
+              </div>
+            `;
+          }
+        }
+      );
+
+      customElements.define(
+        "bracket-container",
+        class BracketContainer extends HTMLElement {
+          connectedCallback() {}
+        }
+      );
+    </script>
+
+    <bracket-container>
+      <match-card
+        playerOneName="Alicred"
+        playerOneScore="3"
+        playerTwoName="Derkila"
+        playerTwoScore="2"
+      ></match-card>
+
+      <match-card
+        playerOneName="Luffy"
+        playerOneScore="1"
+        playerTwoName="Roger"
+        playerTwoScore="4"
+      ></match-card>
+    </bracket-container>
+
+    <bracket-container>
+      <match-card
+        playerOneName="Doflamingo"
+        playerOneScore="3"
+        playerTwoName="Crocodile"
+        playerTwoScore="2"
+      ></match-card>
+
+      <match-card
+        playerOneName="Dendi"
+        playerOneScore="5"
+        playerTwoName="Pudge"
+        playerTwoScore="0"
+      ></match-card>
+    </bracket-container>
+  </body>
+</html>
