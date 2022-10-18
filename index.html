@@ -5,15 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-    <style>
-      bracket-container {
-        margin-bottom: 100px;
-      }
-    </style>
   </head>
   <body>
     <script>
+      const players = [
+        {
+          _id: 1,
+          name: "Alicred",
+        },
+        {
+          _id: 2,
+          name: "Derkila",
+        },
+        {
+          _id: 3,
+          name: "Luffy",
+        },
+        {
+          _id: 4,
+          name: "Roger",
+        },
+        {
+          _id: 5,
+          name: "Doflamingo",
+        },
+        {
+          _id: 6,
+          name: "Crocodile",
+        },
+        {
+          _id: 7,
+          name: "Dendi",
+        },
+        {
+          _id: 8,
+          name: "Pudge",
+        },
+      ];
       customElements.define(
         "player-card",
         class extends HTMLElement {
@@ -25,11 +53,21 @@
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
-                  padding: 0.5rem;
                 }  
+
+                .card > div {
+                  padding: 0.5rem;
+                }
 
                 p {
                   margin: 0;
+                  
+                }
+
+                .card-score {
+                  background: ${
+                    +this.getAttribute("score") > 2 ? "orange" : "gray"
+                  }
                 }
               </style>
               <div class="card">
@@ -57,8 +95,10 @@
                   flex-direction: column;
                   background: #181818;
                   color: #fff;
-                  width: 100px;
+                  width: 130px;
                   margin-bottom: 20px;
+                  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+                  border-radius: 3px;
                 }
               </style>
 
