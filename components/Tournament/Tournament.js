@@ -29,6 +29,35 @@ class Tournament extends HTMLElement {
   }
   connectedCallback() {
     this.render();
+
+    this.addEventListener("mouseover", function (e) {
+      const players = [
+        ...e.currentTarget.getElementsByClassName("player-card"),
+      ];
+      const player = e.target.closest(".player-card");
+
+      if (!player) return;
+
+      const playerId = player.dataset.playerid;
+
+      players
+        .filter((player) => {
+          return player.dataset.playerid !== playerId;
+        })
+        .forEach((player) => {
+          player.style.opacity = "0.2";
+        });
+    });
+
+    this.addEventListener("mouseout", function (e) {
+      const players = [
+        ...e.currentTarget.getElementsByClassName("player-card"),
+      ];
+
+      players.forEach((player) => {
+        player.style.opacity = "1";
+      });
+    });
   }
 
   render() {
