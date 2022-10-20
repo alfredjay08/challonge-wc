@@ -1,5 +1,6 @@
 import { expect, fixture, html } from "@open-wc/testing";
 import "../components/Bracket/Bracket.js";
+import { Match } from "../components/Match/Match.js";
 
 it("should not render without children", async () => {
   const el = await fixture(html`<bracket-container></bracket-container>`);
@@ -7,14 +8,14 @@ it("should not render without children", async () => {
   expect(el).lightDom.to.equal("");
 });
 
-it("should render match without the need to import match in this file", async () => {
-  const el = await fixture(html`<bracket-match>
+it("should render all light dom elements into shadow dom", async () => {
+  const el = await fixture(html`<bracket-container>
     <match-container></match-container>
     <match-container></match-container>
-  </bracket-match>`);
+  </bracket-container>`);
 
-  expect(el).dom.to.equal(`<bracket-match>
-  <match-container></match-container>
-  <match-container></match-container>
-  </bracket-match>`);
+  const slotItems = el.shadowRoot.querySelector("slot").assignedElements();
+
+  expect(slotItems[0] instanceof Match).to.be.equal(true);
+  expect(slotItems[1] instanceof Match).to.be.equal(true);
 });

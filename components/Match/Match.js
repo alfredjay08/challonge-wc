@@ -45,7 +45,7 @@ tempt.innerHTML = `
     <slot></slot>
   `;
 
-class Match extends HTMLElement {
+export class Match extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
