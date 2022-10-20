@@ -1,5 +1,3 @@
-import { matches } from "../../model.js";
-
 const tempt = document.createElement("template");
 tempt.innerHTML = `
     <style>
@@ -9,11 +7,18 @@ tempt.innerHTML = `
         background: #181818;
         color: #fff;
         width: 130px;
-        margin-bottom: 20px;
         box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
         border-radius: 3px;
 
         position: relative;
+      }
+
+      :host(:first-child) {
+        margin-bottom: 50px;
+      }
+
+      :host([semi]) {
+        margin-bottom: 140px !important;
       }
 
       :host::before {
@@ -48,17 +53,10 @@ class Match extends HTMLElement {
   }
 
   connectedCallback() {
-    const match = matches.find(
-      (match) => match._id === +this.getAttribute("matchId")
-    );
-
-    this.players = match.players;
     this.render();
   }
 
   render() {
-    const [playerOne, playerTwo] = this.players;
-
     const style = `
     <style>
       .player-card {
@@ -86,30 +84,7 @@ class Match extends HTMLElement {
     </style>
   `;
 
-    this.innerHTML = `
-      ${style}
-      <div class="player-card" data-playerId="${playerOne._id}">
-        <div class="card-name">
-          <p>${playerOne.name}</p>
-        </div>
-        <div class="card-score ${
-          playerOne.score > playerTwo.score ? "winner" : ""
-        }">
-          <p>${playerOne.score}</p>
-        </div>
-      </div>  
-
-      <div class="player-card" data-playerId="${playerTwo._id}">
-        <div class="card-name">
-          <p>${playerTwo.name}</p>
-        </div>
-        <div class="card-score ${
-          playerOne.score < playerTwo.score ? "winner" : ""
-        }">
-          <p>${playerTwo.score}</p>
-        </div>
-      </div>  
-    `;
+    this.innerHTML += style;
   }
 }
 
