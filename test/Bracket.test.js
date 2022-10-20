@@ -12,6 +12,19 @@ it("should render all light dom elements into shadow dom", async () => {
   const el = await fixture(html`<bracket-container>
     <match-container></match-container>
     <match-container></match-container>
+    <match-container></match-container>
+    <match-container></match-container>
+  </bracket-container>`);
+
+  const slotItems = el.shadowRoot.querySelector("slot").assignedElements();
+
+  expect(slotItems.length).to.equal(4);
+});
+
+it("should render instances of match component only", async () => {
+  const el = await fixture(html`<bracket-container>
+    <match-container></match-container>
+    <match-container></match-container>
   </bracket-container>`);
 
   const slotItems = el.shadowRoot.querySelector("slot").assignedElements();
